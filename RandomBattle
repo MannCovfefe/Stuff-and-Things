@@ -1,0 +1,1246 @@
+#!/usr/bin/env python
+
+try:
+    import sys,re,os,shutil,random
+    import WeaponsTraining
+except:
+    sys.exit("Import error!")
+
+def Extras(content, race, gender):
+    # Content will map to whatever random gen it needs.
+    
+    if content == 1:  #gender
+        CoinFlip = random.randint(1,2)
+        
+        if CoinFlip == 1:
+            DownLoadable = 'f'
+        if CoinFlip == 2:
+            DownLoadable = 'm'
+        #else:
+            #print 'Eh wot?'
+        
+    if content == 2:  #race
+        raceSet = random.randint(1,8)
+    
+        if raceSet == 1:
+            DownLoadable = 'human'
+        
+        if raceSet == 2:
+            DownLoadable = 'elf'
+        
+        if raceSet == 3:
+            DownLoadable = 'half elf'
+        
+        if raceSet == 4:
+            DownLoadable = 'dwarf'
+        
+        if raceSet == 5:
+            DownLoadable = 'halfling'
+        
+        if raceSet == 6:
+            DownLoadable = 'gnome'
+        
+        if raceSet == 7:
+            DownLoadable = 'dragonbourne'
+        
+        if raceSet == 8:
+            DownLoadable = 'half orc'  
+    
+    if content == 3:  #name
+        BabyNamesFemale=['Nia', 'Hestia', 'Remmy', 'Adai', 'Meera', 'Sera', 'Vivian', 'Lupe', 'Ana', 'Ione', 'Julia', 'Justinia', 'Ophelia', 'Neela', 'Spyder', 'Nyx', 'Solace', 'Diniwedd', 'Kimi', 'Hikari']
+        BabyNamesMale=['Bob', 'Grey', 'Joof', 'Akai', 'Sirus', 'Ceil', 'Azoth', 'Cyrion', 'Bruce', 'Alistair', 'Spyder', 'Joe', 'Zaak', 'Bubba', 'Wes', 'Ophren', 'Xion', 'Tye', 'Jimaru', 'Ken', 'Smith']
+        
+        random.shuffle(BabyNamesFemale)
+        random.shuffle(BabyNamesMale)
+        
+        if gender == 'f':
+            NameGet = random.randint(1, len(BabyNamesFemale))
+            DownLoadable = BabyNamesFemale[NameGet - 1]
+        if gender == 'm':
+            NameGet = random.randint(1, len(BabyNamesMale))
+            DownLoadable = BabyNamesMale[NameGet - 1]
+       
+        #else:
+            #print 'Requires gender to randomly assign name.'
+
+    if content == 4:  #Age
+        if race == 'human':
+            DownLoadable = random.randint(18,40)
+        
+        if race == 'elf':
+            DownLoadable = random.randint(60,110)
+        
+        if race == 'half elf':
+            DownLoadable = random.randint(20,70)
+        
+        if race == 'dwarf':
+            DownLoadable = random.randint(30,70)
+            
+        if race == 'halfling':
+            DownLoadable = random.randint(18,40)
+        
+        if race == 'gnome':
+            DownLoadable = random.randint(18,40)
+        
+        if race == 'dragonbourne':
+            DownLoadable = random.randint(18,40)
+        
+        if race == 'half orc':
+            DownLoadable = random.randint(18,40)
+        
+        #else:
+            #print 'Requires race to randomly assign age.'
+        
+    if content == 5:  #eye
+    
+        if re.match('human|halfling|dwarf|gnome|half orc', race):
+            EyeColours=['blue', 'green', 'hazel', 'black', 'grey']
+            random.shuffle(EyeColours)
+            EyeSelect = random.randint(1, len(EyeColours))
+            DownLoadable = EyeColours[EyeSelect - 1]
+        
+        if re.match('elf|half elf', race):
+            EyeColours=['blue', 'green', 'purple', 'silver', 'red']
+            random.shuffle(EyeColours)
+            EyeSelect = random.randint(1, len(EyeColours))
+            DownLoadable = EyeColours[EyeSelect - 1]
+            
+        if re.match('dragonbourne', race):
+            EyeColours=['gold', 'black', 'red', 'green', 'purple']
+            random.shuffle(EyeColours)
+            EyeSelect = random.randint(1, len(EyeColours))
+            DownLoadable = EyeColours[EyeSelect - 1]
+        
+        #else:
+            #print 'Requires race to randomly assign eye colour.'
+    
+    if content == 6:  #Hair
+    
+        if  re.match('human|halfling|dwarf|gnome|half orc', race):
+            if re.match('m', gender):
+                HairColours=['blond', 'brown', 'red', 'black', 'grey', 'bald']
+            if re.match('f', gender):
+                HairColours=['blonde', 'brown', 'red', 'black', 'grey', 'bald']
+            random.shuffle(HairColours)
+            HairSelect = random.randint(1, len(HairColours))
+            DownLoadable = HairColours[HairSelect - 1]
+        
+        if re.match('elf|half elf', race):
+            if re.match('m', gender):
+                HairColours=['blond', 'black', 'silver', 'white', 'brown', 'bald']
+            if re.match('f', gender):
+                HairColours=['blonde', 'black', 'silver', 'white', 'brown', 'bald']
+            random.shuffle(HairColours)
+            HairSelect = random.randint(1, len(HairColours))
+            DownLoadable = HairColours[HairSelect - 1]
+            
+        if re.match('dragonbourne', race):
+            HairColours=['gold', 'red', 'blue', 'silver', 'copper']
+            random.shuffle(HairColours)
+            HairSelect = random.randint(1, len(HairColours))
+            DownLoadable = HairColours[HairSelect - 1]
+            
+        #else:
+            #print 'Requires race to randomly assign hair colour.'
+
+    if content == 7:  #class 1-10
+        
+        classSet = random.randint(1,10)
+        
+        if classSet == 1:
+            DownLoadable = 'Warrior'
+        if classSet == 2:
+            DownLoadable = 'Ranger'
+        if classSet == 3:
+            DownLoadable = 'Wizard'
+        if classSet == 4:
+            DownLoadable = 'Mage'
+        if classSet == 5:
+            DownLoadable = 'Rogue'
+        if classSet == 6:
+            DownLoadable = 'Bard'
+        if classSet == 7:
+            DownLoadable = 'Barbarian'
+        if classSet == 8:
+            DownLoadable = 'Cleric'
+        if classSet == 9:
+            DownLoadable = 'Paladin'
+        if classSet == 10:
+            DownLoadable = 'Monk'
+                #Prestige classes:
+                    # Hero / Defender
+                    # Sniper / Duelist
+                    # High Wizard / Arcanist
+                    # Druid / Chaos Walker
+                    # Master Thief / Shadow Dancer
+                    # Con Artist / Minstrel
+                    # Battle Master / Berserker
+                    # High Priest / Warrior Cleric
+                    # Knight / Templar
+                    # Way of the Fist / Weapon Master
+
+    if content == 8:  #weapon 1-20
+        
+        weaponSet = random.randint(1,19)
+        if weaponSet == 1:
+            SwordType = random.randint(1,2)
+            if SwordType == 1:
+                MoreSword = random.randint(1,4)
+                if MoreSword == 1:
+                    Thinga = 'Single Sword'
+                if MoreSword == 2:
+                    Thinga = 'Dual Swords'
+                if MoreSword == 3:
+                    Thinga = '1 Sword, 1 Dagger'
+                if MoreSword == 4:
+                    Thinga = 'Sword and Shield'
+            if SwordType == 2:
+                MoreSword = random.randint(1,4)
+                if MoreSword == 1:
+                    Thinga = 'Single Short Sword'
+                if MoreSword == 2:
+                    Thinga = 'Dual Short Swords'
+                if MoreSword == 3:
+                    Thinga = '1 Short Sword, 1 Dagger'
+                if MoreSword == 4:
+                    Thinga = 'Short Sword and Shield'
+        if weaponSet == 2:    
+            Thinga = 'Long Sword'
+        if weaponSet == 3:
+            Thinga = 'Pole Axe'
+        if weaponSet == 4:
+            Thinga = 'Katana'
+        if weaponSet == 5:
+            Thinga = 'Bo Staff'
+        if weaponSet == 6:
+            Thinga = 'Nun Chaku'
+        if weaponSet == 7:
+            SickleType = random.randint(1,3)
+            if SickleType == 1:
+                Thinga = 'Single Sickle'
+            if SickleType == 2:
+                Thinga = 'Dual Sickles'
+            if SickleType == 3:
+                Thinga = 'Chain Sickle'
+        if weaponSet == 8:
+            Thinga = 'Scythe'
+        if weaponSet == 9:
+            MartialStyle = random.randint(1,5)
+            if MartialStyle == 1:
+                Thinga = 'Aerialist Martial Arts'
+            if MartialStyle == 2:
+                Thinga = 'Steel Soul Martial Arts'
+            if MartialStyle == 3:
+                Thinga = 'Universal Way Martial Arts'
+            if MartialStyle == 4:
+                Thinga = 'Brass Knuckles'
+            if MartialStyle == 5:
+                Thinga = 'Bare Hands'
+        if weaponSet == 10:
+            DaggerStyle = random.randint(1,4)
+            if DaggerStyle == 1:
+                Thinga = 'Single Dagger'
+            if DaggerStyle == 2:
+                Thinga = 'Dual Daggers'
+            if DaggerStyle == 3:
+                Thinga = 'Throwing Daggers'
+            if DaggerStyle == 4:
+                Thinga = 'Hatchet'
+        if weaponSet == 11:
+            Thinga = 'Rapier'
+        if weaponSet == 12:
+            SaiStyle = random.randint(1,2)
+            if SaiStyle == 1:
+                Thinga = 'Single Sai'
+            if SaiStyle == 2:
+                Thinga = 'Dual Sai'
+        if weaponSet == 13:
+            Thinga = 'Battle Axe'
+        if weaponSet == 14:
+            Thinga = 'War Hammer'
+        if weaponSet == 15:
+            Thinga = 'Great Sword'
+        if weaponSet == 16:
+            Thinga = 'Bastard Sword'
+        if weaponSet == 17:
+            Thinga = 'Halberd'
+        if weaponSet == 18:
+            BowStyle = random.randint(1,2)
+            if BowStyle == 1:
+                Thinga = 'Bow'
+            if BowStyle == 2:
+                Thinga = 'Crossbow'
+        if weaponSet == 19:
+            MaceStyle = random.randint(1,2)
+            if MaceStyle == 1:
+                Thinga = 'Mace'
+            if MaceStyle == 2:
+                Thinga = 'Flail'
+
+        #print Thinga
+        DownLoadable = WeaponsTraining.WeaponSelect(Thinga, race, gender)
+
+        return(DownLoadable)
+
+    if content == 9:  #stats 6-18
+        DownLoadable = {'Dex':0, 'Str':0, 'Cha':0, 'Int':0, 'Wis':0, 'Con':0}
+        DownLoadable['Str'] = random.randint(6,18)
+        DownLoadable['Dex'] = random.randint(6,18)
+        DownLoadable['Int'] = random.randint(6,18)
+        DownLoadable['Cha'] = random.randint(6,18)
+        DownLoadable['Wis'] = random.randint(6,18)
+        DownLoadable['Con'] = random.randint(6,18)
+    
+        #print DownLoadable
+        
+    return(DownLoadable)
+
+def StatAssign(Stats, Class, Race):
+    if Race == 'human':
+        Stats['Dex'] += 1
+        Stats['Str'] += 2
+        Stats['Con'] +=1
+    
+    if Race == 'elf':
+        Stats['Dex'] += 3
+        Stats['Cha'] += 2
+        Stats['Wis'] += 1
+        Stats['Int'] += 1
+    
+    if Race == 'half elf':
+        Stats['Dex'] += 1
+        Stats['Str'] += 1
+        Stats['Cha'] += 1
+    
+    if Race == 'dwarf':
+        Stats['Str'] += 4
+        Stats['Dex'] += 1
+        Stats['Wis'] += 1
+        Stats['Con'] +=2
+    
+    if Race == 'half orc':
+        Stats['Str'] += 4
+        Stats['Dex'] += 1
+        Stats['Con'] +=2
+    
+    if Race == 'halfling':
+        Stats['Dex'] += 2
+        Stats['Cha'] += 2
+        Stats['Int'] += 1
+    
+    if Race == 'gnome':
+        Stats['Int'] += 2
+        Stats['Wis'] += 2
+        Stats['Cha'] +=1
+    
+    if Race == 'dragonbourne':
+        Stats['Str'] += 3
+        Stats['Int'] += 1
+        Stats['Wis'] += 1
+        Stats['Con'] +=2
+
+    #print Stats
+     
+    if Class == 'Ranger':
+        Stats['Dex'] += 2
+        Stats['Str'] += 1
+        Stats['Int'] += 1
+    
+    if Class == 'Barbarian':
+        Stats['Str'] += 4
+        Stats['Con'] +=2
+    
+    if Class == 'Bard':
+        Stats['Dex'] += 1
+        Stats['Cha'] += 2
+    
+    if Class == 'Cleric':
+        Stats['Int'] += 1
+        Stats['Wis'] += 2
+        Stats['Cha'] += 1
+        Stats['Con'] +=1
+    
+    if Class == 'Mage':
+        Stats['Int'] += 1
+        Stats['Wis'] += 1
+        Stats['Cha'] += 2
+    
+    if Class == 'Monk':
+        Stats['Dex'] += 2
+        Stats['Int'] += 2
+        Stats['Str'] += 1
+        Stats['Wis'] += 1
+    
+    if Class == 'Paladin':
+        Stats['Str'] += 2
+        Stats['Wis'] += 1
+        Stats['Con'] +=2
+    
+    if Class == 'Rogue':
+        Stats['Dex'] += 3
+        Stats['Wis'] += 1
+        Stats['Cha'] += 1
+    
+    if Class == 'Warrior':
+        Stats['Str'] += 2
+        Stats['Dex'] += 1
+        Stats['Cha'] += 1
+        Stats['Con'] +=1
+    
+    if Class == 'Wizard':
+        Stats['Int'] += 2
+        Stats['Wis'] += 1
+        Stats['Cha'] += 1
+
+    #print Stats
+    return(Stats)
+
+def AssignProficiency(Class):
+    if re.match('Barbarian', Class):
+        Prof = 'Str'
+    if re.match('Bard', Class):
+        Prof = 'Dex'
+    if re.match('Cleric', Class):
+        Prof = 'Str'
+    if re.match('Mage', Class):
+        Prof = 'Dex'
+    if re.match('Monk', Class):
+        Prof = 'Dex'
+    if re.match('Paladin', Class):
+        Prof = 'Str'
+    if re.match('Ranger', Class):
+        Prof = 'Dex'
+    if re.match('Rogue', Class):
+        Prof = 'Dex'
+    if re.match('Warrior', Class):
+        Prof = 'Str'
+    if re.match('Wizard', Class):
+        Prof = 'Dex'
+
+    return(Prof)
+
+def WeaponStats(Mabob, PlayerStats):
+    WeaponMabob = WeaponsTraining.WeaponSelect(Mabob, PlayerStats['Proficiency'], PlayerStats['Stats'])
+
+    return(WeaponMabob)
+
+
+def ComputerCreate():
+    #Randomly creates a character
+    #Order:
+        #Race, Gender, Name, Age, Hair/Eye colour, Class, Weapon, Stats
+    gender = 0
+    race = 0
+    PlayerStats = {"Name":[], "Race":[], "Class":[], "Weapon":[], "Age":[], "Hair Colour":[], "Eye Colour":[], "Gender":[], "Stats":[], "PL":[] }
+    
+    PlayerStats['Gender'] = Extras(1, race, gender)
+    PlayerStats['Race'] = Extras(2, race, gender)
+    PlayerStats['Name'] = Extras(3, PlayerStats['Race'], PlayerStats['Gender'])
+    PlayerStats['Age'] = Extras(4, PlayerStats['Race'], PlayerStats['Gender'])
+    PlayerStats['Eye Colour'] = Extras(5, PlayerStats['Race'], PlayerStats['Gender'])
+    PlayerStats['Hair Colour'] = Extras(6, PlayerStats['Race'], PlayerStats['Gender'])
+    PlayerStats['Class'] = Extras(7, race, gender)
+    PlayerStats['Stats'] = Extras(9, race, gender)
+    PlayerStats['Stats'] = StatAssign(PlayerStats['Stats'], PlayerStats['Class'], PlayerStats['Race'])
+    PlayerStats['Proficiency'] = AssignProficiency(PlayerStats['Class'])
+    #PlayerStats['PL'] = int(PlayerStats['Stats'][PlayerStats['Proficiency']] + (1*1.5))
+    PlayerStats['Weapon'] = Extras(8, PlayerStats['Proficiency'], PlayerStats['Stats'])
+
+    #print PlayerStats['Proficiency']
+    #print PlayerStats['Stats']
+
+    return(PlayerStats)
+
+def PlayerCreate(RaceOptions, ClassOptions, WeaponOptions):
+    #
+    # Need: Player name, age, gender, hair/eye colour, race, class, weapon, stats
+    #
+    #Have non anwsers sent to the randomizer
+    gender=0
+    race=0
+    PlayerStats = {"Name":[], "Race":[], "Class":[], "Weapon":{}, "Age":0, "Hair Colour":[], "Eye Colour":[], "Gender":[], "Stats":[], "Level":1, "Proficiency":'', "PL":'' }
+    PlayerStats['Stats'] = {'Dex':0, 'Str':0, 'Cha':0, 'Int':0, 'Wis':0, 'Con':0}
+    
+    i=1      
+    for race in RaceOptions:
+       print i, race
+       i+=1
+    RaceSelect = raw_input("Select a race; to have it randomly selected hit enter?: ".rstrip("\n"))
+    try:
+        while int(RaceSelect) != [1-5]:
+            if RaceSelect == '':
+                PlayerStats['Race'] = Extras(2, race, gender)
+                break
+            if int(RaceSelect) <= 5:
+                PlayerStats['Race'] = RaceOptions[int(RaceSelect) - 1]
+                break
+            else:
+                RaceSelect = raw_input("Select the number associated with the desired race: ".rstrip("\n"))
+    except ValueError:
+        if RaceSelect == '':
+            PlayerStats['Race'] = Extras(2, race, gender)
+        else:
+            RaceSelect = raw_input("Select the number associated with the desired race: ".rstrip("\n"))
+    except:
+        print 'Bad things'
+
+    GenderSelect = raw_input("Select a gender; if you want to have it randomly selected hit enter:(m/f) ".rstrip("\n"))
+    if re.match('([m|M])|([m|M][a|A][l|L][e|E])', GenderSelect):
+        PlayerStats['Gender'] = 'm'
+    if re.match('([f|F])|([f|F][e|E][m|M][a|A][l|L][e|E])', GenderSelect):
+        PlayerStats['Gender'] = 'f'
+    if re.match('\A\Z', GenderSelect):
+        PlayerStats['Gender'] = Extras(1, race, gender)
+
+    NameSelect = raw_input("Please enter a name; to have it randomly selected, hit enter: ".rstrip("\n"))
+    if NameSelect == '':
+        PlayerStats['Name'] = Extras(3, PlayerStats['Race'], PlayerStats['Gender'])
+    else:
+        PlayerStats['Name'] = NameSelect
+
+    i=1
+    for Class in ClassOptions:
+        print i, Class
+        i+=1
+    ClassSelect = raw_input("Select a class; to have it randomly selected, hit enter: ".rstrip("\n"))
+    try:
+        while int(ClassSelect) != [1-10]:
+            if int(ClassSelect) <= 10:
+                PlayerStats['Class'] = ClassOptions[int(ClassSelect) - 1]
+                PlayerStats['Proficiency'] = AssignProficiency(PlayerStats['Class'])
+                break
+            if ClassSelect == '':
+                PlayerStats['Class'] = Extras(7, race, gender)
+                PlayerStats['Proficiency'] = AssignProficiency(PlayerStats['Class'])
+                break
+            else:
+                ClassSelect = raw_input("Select the number associated with the desired class: ".rstrip("\n"))
+    except ValueError:
+        if ClassSelect == '':
+                PlayerStats['Class'] = Extras(7, race, gender)
+                PlayerStats['Proficiency'] = AssignProficiency(PlayerStats['Class'])
+    except:
+            print 'Bad things!  Bad things!'
+
+    i=1
+    if  re.match('human|halfling|dwarf|gnome|half orc', PlayerStats['Race']):
+        if re.match('m', PlayerStats['Gender']):
+            HairColours=['blond', 'brown', 'red', 'black', 'grey', 'bald']
+            for Hair in HairColours:
+                print i, Hair
+                i+=1
+        if re.match('f', PlayerStats['Gender']):
+            HairColours=['blonde', 'brown', 'red', 'black', 'grey', 'bald']
+            for Hair in HairColours:
+                print i, Hair
+                i+=1
+        
+    if re.match('elf|half elf', PlayerStats['Race']):
+        if re.match('m', PlayerStats['Gender']):
+            HairColours=['blond', 'black', 'silver', 'white', 'brown', 'bald']
+            for Hair in HairColours:
+                print i, Hair
+                i+=1
+        if re.match('f', PlayerStats['Gender']):
+            HairColours=['blonde', 'black', 'silver', 'white', 'brown', 'bald']
+            for Hair in HairColours:
+                print i, Hair
+                i+=1
+            
+    if re.match('dragonbourne', PlayerStats['Race']):
+        HairColours=['gold', 'red', 'blue', 'silver', 'copper', 'green']
+        for Hair in HairColours:
+            print i, Hair
+            i+=1
+    
+    HairSelect = raw_input("Select hair colour; to have it randomly selected, hit enter: ".rstrip("\n"))
+    try:
+        while int(HairSelect) != [1-6]:
+            if int(HairSelect) <= 6:
+                PlayerStats['Hair Colour'] = HairColours[int(HairSelect) - 1]
+                break
+            if HairSelect == '':
+                PlayerStats['Hair Colour'] = Extras(6, PlayerStats['Race'], PlayerStats['Gender'])
+                break
+            else:
+                HairSelect = raw_input("Select the number associated with the desired hair colour: ".rstrip("\n"))
+    except ValueError:
+        if HairSelect == '':
+                PlayerStats['Hair Colour'] = Extras(6, PlayerStats['Race'], PlayerStats['Gender'])
+    except:
+        print 'Bad things! Bad things!'
+
+    i=1
+    if re.match('human|halfling|dwarf|gnome|half orc', PlayerStats['Race']):
+        EyeColours=['blue', 'green', 'hazel', 'black', 'grey']
+        for Eye in EyeColours:
+            print i, Eye
+            i+=1
+    if re.match('elf|half elf', PlayerStats['Race']):
+        EyeColours=['blue', 'green', 'purple', 'silver', 'red']
+        for Eye in EyeColours:
+            print i, Eye
+            i+=1
+    if re.match('dragonbourne', PlayerStats['Race']):
+        EyeColours=['gold', 'black', 'red', 'green', 'purple']
+        for Eye in EyeColours:
+            print i, Eye
+            i+=1
+    
+    EyeSelect = raw_input("Select eye colour; to have it randomly selected, hit enter: ".rstrip("\n"))
+    try:
+        while int(EyeSelect) != [1-5]:
+            if int(EyeSelect) <= 5:
+                PlayerStats['Eye Colour'] = EyeColours[int(EyeSelect) - 1]
+                break
+            if EyeSelect == '':
+                PlayerStats['Eye Colour'] = Extras(5, PlayerStats['Race'], gender)
+                break
+            else:
+                EyeSelect = raw_input("Select the number associated with the desired eye colour: ".rstrip("\n"))
+    except ValueError:
+        if EyeSelect == '':
+                PlayerStats['Eye Colour'] = Extras(5, PlayerStats['Race'], gender)
+    except:
+            print 'Bad things!  Bad things!'
+
+    try:
+        while PlayerStats['Age'] == 0:
+            if PlayerStats['Race'] == 'human':
+                AgeSelect = raw_input("Select an age between 18 and 40: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 40:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 18:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if (int(AgeSelect) <= 40 | int(AgeSelect) >= 18):
+                        PlayerStats['Age'] = int(AgeSelect)   
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(18, 40)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'elf':
+                #DownLoadable = random.randint(60,110)
+                AgeSelect = raw_input("Select an age between 60 and 110: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 111:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 40 and 90: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 59:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 40 and 90: ".rstrip("\n"))
+                        continue
+                    if (int(AgeSelect) <= 110 | int(AgeSelect) >= 60):
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(60, 110)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'half elf':
+                #DownLoadable = random.randint(20,55)
+                AgeSelect = raw_input("Select an age between 20 and 70: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 71:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 20 and 70: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 19:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 20 and 70: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) <= 70 >= 20:
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(20, 70)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'dwarf':
+                #DownLoadable = random.randint(20,55)
+                AgeSelect = raw_input("Select an age between 20 and 70: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 71:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 20 and 70: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 19:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 20 and 70: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) <= 70 >= 20:
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(30, 70)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'halfling':
+                #DownLoadable = random.randint(18,40)
+                AgeSelect = raw_input("Select an age between 18 and 40: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 41:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 17:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) <= 40 >= 18:
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(18, 40)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'gnome':
+                #DownLoadable = random.randint(18,40)
+                AgeSelect = raw_input("Select an age between 18 and 40: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 41:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 17:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) <= 40 >= 18:
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(18, 40)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'dragonbourne':
+                #DownLoadable = random.randint(18,40)
+                AgeSelect = raw_input("Select an age between 18 and 40: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 41:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 17:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) <= 40 >= 18:
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(18, 40)
+                except:
+                    print 'Eh wot'
+            if PlayerStats['Race'] == 'half orc':
+                #DownLoadable = random.randint(18,40)
+                AgeSelect = raw_input("Select an age between 18 and 40: ".rstrip("\n"))
+                try:
+                    if int(AgeSelect) > 41:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) < 17:
+                        AgeSelect = raw_input("Age out of range.  Select an age between 18 and 40: ".rstrip("\n"))
+                        continue
+                    if int(AgeSelect) <= 40 >= 18:
+                        PlayerStats['Age'] = int(AgeSelect)
+                except ValueError:
+                    if AgeSelect == '':
+                        PlayerStats['Age'] = random.randint(18, 40)
+                except:
+                    print 'Eh wot'
+    except:
+        print 'Something bad...'
+
+    Stats = []
+    Attribs = ['Str', 'Dex', 'Int', 'Cha', 'Wis', 'Con']
+    i=1
+    while i < 7:
+        Stats.append(random.randint(6,18))
+        i+=1
+    print Stats
+    i=0
+    reRoll=2
+    while i < 6:
+        Stat = raw_input(("Select which stat should be assigned {Value}: {Attribs} ".format(Value=Stats[i], Attribs=Attribs)).rstrip("\n"))
+        if re.match('[R|r][E|e][R|r][O|o][L|l][L|l]', Stat):
+            v=1
+            if reRoll > 0:
+                if len(Attribs) < 7:
+                    Stats=[]
+                    while v < 7:
+                        Stats.append(random.randint(6,18))
+                        v+=1
+                    print Stats
+                    reRoll-=1
+                    print "You have {rerolls} left.".format(rerolls=reRoll)
+                else:
+                    print 'Too late to reroll.'
+            else:
+                print "Out of rerolls."
+        if re.match('[d|D][e|E][x|X]$|[s|S][t|T][r|R]$|[c|C][h|H][a|A]$|[i|I][n|N][t|T]$|[w|W][i|I][s|S]$|[c|C][o|O][n|N]$', Stat):
+            Stat = Stat.title()
+            Attribs.remove(Stat)
+            PlayerStats['Stats'][Stat] = Stats[i]
+            i+=1
+        if re.match('\A\Z', Stat):
+            random.shuffle(Attribs)
+            Var = random.randint(1, len(Attribs))
+            Stat = Attribs[Var - 1]
+            Attribs.remove(Stat)
+            PlayerStats['Stats'][Stat] = Stats[i]
+            i+=1
+        if re.match('!([d|D][e|E][x|X]$|[s|S][t|T][r|R]$|[c|C][h|H][a|A]$|[i|I][n|N][t|T]$|[w|W][i|I][s|S]$|[c|C][o|O][n|N]$)', Stat):
+            print "Input stat as {Attribs}".format(Attribs=Attribs)
+    StatAssign(PlayerStats['Stats'], PlayerStats['Class'], PlayerStats['Race'])
+
+    i=1
+    #PlayerStats['PL'] = int(PlayerStats['Stats'][PlayerStats['Proficiency']])+(1*1.5)
+    for Weapon in WeaponOptions:
+        print i, Weapon
+        i+=1
+    WeaponSelect = raw_input("Select a weapon; to have it randomly selected, hit enter: ".rstrip("\n"))
+    try:
+        while int(WeaponSelect) != [1-13]:
+            if int(WeaponSelect) <= 13:
+                WeaponFind = PlayerWeaponSelect(int(WeaponSelect), WeaponOptions)
+                #print PlayerStats['Weapon']
+                break
+            if WeaponSelect == '':
+                PlayerStats['Weapon'] = Extras(8, PlayerStats['Proficiency'], PlayerStats['Stats'])
+                break
+            else:
+                WeaponSelect = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        if WeaponFind:
+            PlayerStats['Weapon'] = WeaponStats(WeaponFind, PlayerStats)
+        else:
+            pass
+    except ValueError:
+        if WeaponSelect == '':
+                PlayerStats['Weapon'] = Extras(8, PlayerStats['Proficiency'], PlayerStats['Stats'])
+    except Exception as err:
+        print err
+        print 'Bad things!  Bad things!'
+
+
+    return(PlayerStats)
+
+def PlayerWeaponSelect(WeaponType, WeaponOptions):
+    SwordSub = ['Sword', 'Short Sword', 'Long Sword', 'Katana', 'Rapier']
+    DaggerSub = ['Dagger', 'Sai', 'Hatchet']
+    GreatSub = ['Great Sword', 'Bastard Sword', 'Halberd']
+    UnarmedSub = ['Martial Arts: Aerialist', 'Martial Arts: Steel Soul', 'Martial Arts: Universal Way', 'Brass Knuckles', 'Bare Hands']
+    BowSub = ['Bow', 'CrossBow']
+    MaceSub = ['Mace', 'Flail']
+    i=1
+
+    if WeaponType == 1:
+        for Weapon in SwordSub:
+            print i, Weapon
+            i+=1
+        Selection = raw_input("Which Sword; if you want to have a randomly selected sword, hit enter?: ".rstrip("\n"))
+        try:
+            while int(Selection) != [1-5]:
+                if int(Selection) <= 2:
+                    WeaponChoice = WeaponSpecifics(int(Selection), 0)
+                    break
+                if int(Selection) >= 2 <= 5:
+                    WeaponChoice = SwordSub[int(Selection) - 1]
+                    break
+                if re.match('\A\Z', Selection):
+                    WeaponChoice = random.randint(1, len(SwordSub))
+                else:
+                    Selection = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        except ValueError:
+            if Selection == '':
+                    WeaponChoice = random.randint(1, len(SwordSub))
+        except:
+            print 'Bad things'
+    if WeaponType == 2:
+        for Weapon in DaggerSub:
+            print i, Weapon
+            i+=1
+        Selection = raw_input("Which Dagger; if you want to have a randomly selected dagger, hit enter?: ".rstrip("\n"))
+        try:
+            while int(Selection) != [1-3]:
+                if int(Selection) == 1:
+                    WeaponChoice = WeaponSpecifics(3, 0) #Dagger
+                    break
+                if int(Selection) == 2:
+                    WeaponChoice = WeaponSpecifics(4, 0) #Sai
+                    break
+                if int(Selection) == 3:
+                    WeaponChoice = 'Hatchet'
+                    break
+                if Selection == '':
+                    NextChoice = random.randint(1, len(DaggerSub))
+                    WeaponChoice = WeaponSpecifics(NextChoice, 1)
+                    break
+                else:
+                    Selection = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        except ValueError:
+            if Selection == '':
+                    NextChoice = random.randint(1, len(DaggerSub))
+                    WeaponChoice = WeaponSpecifics(NextChoice, 1)
+        except:
+            print 'Bad things'
+    if WeaponType == 3:
+        for Weapon in GreatSub:
+            print i, Weapon
+            i+=1
+        Selection = raw_input("Which Great Sword; if you want to have a randomly selected great sword, hit enter?: ".rstrip("\n"))
+        try:
+            while int(Selection) != [1-3]:
+                if int(Selection) <= 3:
+                    WeaponChoice = GreatSub[int(Selection) - 1]
+                    break
+                if Selection == '':
+                    shuffle.random(GreatSub)
+                    Num = random.randint(1, len(GreatSub))
+                    WeaponChoice = GreatSub[Num - 1]
+                    break
+                else:
+                    Selection = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        except ValueError:
+            if Selection == '':
+                    shuffle.random(GreatSub)
+                    Num = random.randint(1, len(GreatSub))
+                    WeaponChoice = GreatSub[Num - 1]
+        except:
+            print 'bad things'
+    if WeaponType == 4:
+        for Weapon in UnarmedSub:
+            print i, Weapon
+            i+=1
+        Selection = raw_input("Which Unarmed; if you want to have a randomly selected unarmed, hit enter?: ".rstrip("\n"))
+        try:
+            while int(Selection) != [1-5]:
+                if int(Selection) <= 5:
+                    WeaponChoice = UnarmedSub[int(Selection) - 1]
+                    break
+                if Selection == '':
+                    shuffle.random(UnarmedSub)
+                    Num = random.randint(1, len(UnarmedSub))
+                    WeaponChoice = UnarmedSub[Num -1]
+                    break
+                else:
+                    Selection = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        except ValueError:
+            if Selection == '':
+                    shuffle.random(UnarmedSub)
+                    Num = random.randint(1, len(UnarmedSub))
+                    WeaponChoice = UnarmedSub[Num -1]
+        except:
+            print 'Bad things'
+    if WeaponType == 5:
+        for Weapon in BowSub:
+            print i, Weapon
+            i+=1
+        Selection = raw_input("Which Bow; if you want to have a randomly selected bow, hit enter?: ".rstrip("\n"))
+        try:
+            while int(Selection) != [1-2]:
+                if int(Selection) <= 2:
+                    WeaponChoice = BowSub[int(Selection) - 1]
+                    break
+                if Selection == '':
+                    shuffle.random(BowSub)
+                    Num = random.randint(1, len(BowSub))
+                    WeaponChoice = BowSub[Num -1]
+                    break
+                else:
+                    Selection = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        except ValueError:
+            if Selection == '':
+                    shuffle.random(BowSub)
+                    Num = random.randint(1, len(BowSub))
+                    WeaponChoice = BowSub[Num -1]
+        except:
+            print 'Bad things'
+    if WeaponType == 6:
+        for Weapon in MaceSub:
+            print i, Weapon
+            i+=1
+        Selection = raw_input("Which Mace; if you want to have a randomly selected mace, hit enter?: ".rstrip("\n"))
+        try:
+            while int(Selection) != [1-2]:
+                if int(Selection) <= 2:
+                    WeaponChoice = MaceSub[int(Selection) - 1]
+                    break
+                if Selection == '':
+                    shuffle.random(MaceSub)
+                    Num = random.randint(1, len(MaceSub))
+                    WeaponChoice = MaceSub[Num -1]
+                    break
+                else:
+                    Selection = raw_input("Select the number associated with the desired weapon: ".rstrip("\n"))
+        except ValueError:
+            if Selection == '':
+                    shuffle.random(MaceSub)
+                    Num = random.randint(1, len(MaceSub))
+                    WeaponChoice = MaceSub[Num -1]
+        except:
+            print 'Bad things'
+    if WeaponType == 7:
+        WeaponChoice = WeaponSpecifics(5, 0)
+    if WeaponType == 8:
+        WeaponChoice = WeaponOptions[int(WeaponType) - 1]
+    if WeaponType == 9:
+        WeaponChoice = WeaponOptions[int(WeaponType) - 1]
+    if WeaponType == 10:
+        WeaponChoice = WeaponOptions[int(WeaponType) - 1]
+    if WeaponType == 11:
+        WeaponChoice = WeaponOptions[int(WeaponType) - 1]
+    if WeaponType == 12:
+        WeaponChoice = WeaponOptions[int(WeaponType) - 1]
+    if WeaponType == 13:
+        WeaponChoice = WeaponOptions[int(WeaponType) - 1]
+    #else:
+        #print 'Not even once.'
+    #print WeaponChoice
+    return(WeaponChoice)
+
+
+def WeaponSpecifics(Answer, Easy):
+    #WeaponStyles['Single', 'Dual', 'Weapon and Shield', 'Weapon and Dagger', 'Throwing', 'Chain']
+    SwordStyles = ['Single Sword', 'Dual Swords', 'Sword and Shield', '1 Sword, 1 Dagger']
+    ShortStyles = ['Single Short Sword', 'Dual Short Swords', 'Short Sword and Shield', '1 Short Sword, 1 Dagger']
+    DaggerStyles = ['Single Dagger', 'Dual Daggers', 'Throwing Dagger']
+    SickleStyles = ['Single Sickle', 'Dual Sickles', 'Chain Sickle']
+    SaiStyles = ['Single Sai', 'Dual Sai']
+    i=1
+    
+    while Easy == 0:
+        if Easy == 0:
+            while Answer != [1-5]:
+                if Answer == '':
+                    Easy = 1
+                    break
+                if Answer == 1:
+                    for Style in SwordStyles:
+                        print i, Style
+                        i+=1
+                    StyleType = raw_input("Select a style; if you want to have it randomly selected, hit enter: ".rstrip("\n"))
+                    try:
+                        while int(StyleType) != [1-4]:
+                            print 'Hit'
+                            if int(StyleType) <= 4:
+                                StyleSelect = SwordStyles[int(StyleType) - 1]
+                                Easy = 2
+                                break
+                            if re.match('\A\Z', StyleSelect):
+                                Easy = 1
+                                break
+                            else:
+                                StyleType = raw_input("Select the number associated with the desired style: ".rstrip("\n"))
+                    except ValueError:
+                        if StyleType == '':
+                                Easy = 1
+                    except:
+                        print 'Bad things.'
+                    break
+                if Answer == 2:
+                    for StyleType in ShortStyles:
+                        print i, Style
+                        i+=1
+                    StyleType = raw_input("Select a style; if you want to have it randomly selected, hit enter: ".rstrip("\n"))
+                    try:
+                        while int(StyleType) != [1-4]:
+                            if int(StyleType) <= 4:
+                                StyleSelect = ShortStyles[int(StyleType) - 1]
+                                Easy = 2
+                                break
+                            if StyleType == '':
+                                Easy = 1
+                                break
+                            else:
+                                StyleType = raw_input("Select the number associated with the desired style: ".rstrip("\n"))
+                    except ValueError:
+                        if StyleType == '':
+                                Easy = 1
+                    except:
+                        print 'Bad things'
+                    break
+                if Answer == 3:
+                    for Style in DaggerStyles:
+                        print i, Style
+                        i+=1
+                    StyleType = raw_input("Select a style; if you want to have it randomly selected, hit enter: ".rstrip("\n"))
+                    try:
+                        while int(StyleType) != [1-3]:
+                            if int(StyleType) <= 3:
+                                StyleSelect = DaggerStyles[int(StyleType) - 1]
+                                Easy = 2
+                                break
+                            if StyleType == '':
+                                Easy = 1
+                                break
+                            else:
+                                StyleType = raw_input("Select the number associated with the desired style: ".rstrip("\n"))
+                    except ValueError:
+                        if StyleType == '':
+                                Easy = 1
+                    except:
+                        print 'Bad things'
+                    break
+                if Answer == 4:
+                    for Style in SaiStyles:
+                        print i, Style
+                        i+=1
+                    StyleType = raw_input("Select a style; if you want to have it randomly selected, hit enter: ".rstrip("\n"))
+                    try:
+                        while int(StyleType) != [1-2]:
+                            if int(StyleType) <= 2:
+                                StyleSelect = SaiStyles[int(StyleType) - 1]
+                                Easy = 2
+                                break
+                            if StyleType == '':
+                                Easy = 1
+                                break
+                            else:
+                                StyleType = raw_input("Select the number associated with the desired style: ".rstrip("\n"))
+                    except ValueError:
+                        if StyleType == '':
+                                Easy = 1
+                    except:
+                        print 'Randomly generating'
+                        print 'Bad things'
+                    break
+                if Answer == 5:
+                    for Style in SickleStyles:
+                        print i, Style
+                        i+=1
+                    StyleType = raw_input("Select a style; if you want to have it randomly selected, hit enter: ".rstrip("\n"))
+                    try:
+                        while int(StyleType) != [1-3]:
+                            if int(StyleType) <= 3:
+                                StyleSelect = SickleStyles[int(StyleType) - 1]
+                                Easy = 2
+                                break
+                            if StyleType == '':
+                                Easy = 1
+                                break
+                            else:
+                                StyleType = raw_input("Select the number associated with the desired style: ".rstrip("\n"))
+                    except ValueError:
+                        if StyleType == '':
+                                Easy = 1
+                    except:
+                        print 'Bad things'
+                    break
+                else:
+                    print 'Not even.'
+
+        if Easy == 1:
+            print 'Randomly generating...'
+            if Answer == 1:
+                random.shuffle(SwordStyles)
+                Selector = random.randint(1, len(SwordStyles))
+                StyleSelect = SwordStyles[Selector -1]
+                break
+            if Answer == 2:
+                random.shuffle(ShortStyles)
+                Selector = random.randint(1, len(ShortStyles))
+                StyleSelect = ShortStyles[Selector -1]
+                break
+            if Answer == 3:
+                random.shuffle(DaggerStyles)
+                Selector = random.randint(1, len(DaggerStyles))
+                StyleSelect = DaggerStyles[Selector -1]
+                break
+            if Answer == 4:
+                random.shuffle(SaiStyles)
+                Selector = random.randint(1, len(SaiStyles))
+                StyleSelect = SaiStyles[Selector -1]
+                break
+            if Answer == 5:
+                random.shuffle(SickleStyles)
+                Selector = random.randint(1, len(SickleStyles))
+                StyleSelect = SickleStyles[Selector -1]
+                break
+            else:
+                print "No 'and then'."
+        
+        #else:
+            #print 'How even tho?'
+            break
+        #print StyleSelect
+    return(StyleSelect)
+
+def Main():
+    #set variables
+    CharRaces = ['human', 'elf', 'half elf', 'dwarf', 'half orc']
+    CharClasses = ['Ranger', 'Warrior', 'Wizard', 'Mage', 'Rogue', 'Bard', 'Barbarian', 'Cleric', 'Paladin', 'Monk']
+    CharWeapons = ['Sword', 'Dagger', 'Great Sword', 'Unarmed', 'Bow', 'Mace', 'Sickle', 'Pole Axe', 'Bo Staff', 'Nun Chaku', 'Scythe', 'Battle Axe', 'War Hammer']
+        #Subcatagories:
+            #Sword: sword, short sword, long sword, katana, rapier
+            #Dagger: dagger, sai, hatchet
+            #Great Sword: Great Sword, Bastard Sword, Halberd
+            #Unarmed: Martial arts, knuckle weapons
+            #Bow: Bow, Crossbow
+            #Mace: Mace, Flail   
+
+    Player1={"Name":[], "Race":[], "Class":[], "Weapon":{}, "Age":0, "Hair Colour":[], "Eye Colour":[], "Gender":[], "Stats":{}, "Level":1, "Proficiency":'', "WepProficiency":1, "PL":''}
+    #Player1['Stats'] = {'Dex':0, 'Str':0, 'Cha':0, 'Int':0, 'Wis':0}
+
+    print 'Welcome, I help generate characters.'
+    Chansey = raw_input("Do you want to have your character entirely randomly generated?:(y/n)".rstrip("\n"))
+
+    if re.match('[y|Y]|[y|Y][e|E][s|S]', Chansey):
+        Player1 = ComputerCreate()
+    else:
+        Player1 = PlayerCreate(CharRaces, CharClasses, CharWeapons)
+    Player1['Level']=1
+    Player1['Health'] = (Player1['Stats']['Str'] * 2) + (Player1['Stats']['Con'] / 4)
+    Player1['Dodge'] = int(Player1['Stats']['Dex'] * 1.5)
+    if Player1['Proficiency'] == Player1['Weapon']['Type']:
+        Player1['WepProficiency'] = (int(Player1['Stats'][Player1['Proficiency']]/ 4)+int(Player1['Level']))
+    elif Player1['Weapon']['Type'] == 'Versitile':
+        Player1['WepProficiency'] = (int(Player1['Stats'][Player1['Proficiency']]/ 4)+int(Player1['Level']))
+    else:
+        Player1['WepProficiency']=1
+
+    print Player1['Name'], Player1['Race'], Player1['Gender'], Player1['Age'], '- hair:', Player1['Hair Colour'], 'eyes:', Player1['Eye Colour']
+    print Player1['Class'],'-', Player1['Weapon']['Name'], Player1['Weapon']['Player']
+    print Player1['Stats']
+    print 'Health:', Player1['Health'], 'Dodge:', Player1['Dodge']
+    print Player1
+
+Main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
